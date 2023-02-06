@@ -1,6 +1,7 @@
 import adminModel from "../../models/admin/adminModel.js";
 import { loginValidation } from "../../validation/adminValidation.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const adminLogin = async (req, res) => {
   try {
@@ -25,9 +26,28 @@ const adminLogin = async (req, res) => {
             //check the password
 
             bcrypt.compare(passWord, user.passWord).then((data) => {
-              console.log(data);
               if (data) {
-                res.status(200).json({ message: "Passwords match" });
+                //generate token
+
+                const token = jwt.sign(
+                  {
+                    userId: user._id,
+                    userEmail: user.userEmail,
+                  },
+                  "JSON_WEB_TOKEN",
+                  {
+                    expiresIn: "24h",
+                  }
+                );
+                if (token) {
+                  //Send token
+                  res
+                    .status(201)
+                    .json({ message: "Successfully logged in", token });
+                } else
+                  res
+                    .status(401)
+                    .json({ error: "Error generating token = ", error });
               } else
                 res
                   .status(401)
@@ -41,10 +61,6 @@ const adminLogin = async (req, res) => {
           });
         });
     }
-
-    //generate token
-
-    //Send token
   } catch (error) {
     res.status(500).json({ err: "Server login error : " + error });
   }

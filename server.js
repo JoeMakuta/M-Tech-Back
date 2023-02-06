@@ -25,6 +25,6 @@ app.use(express.json());
 app.use("/admin", adminRoute);
 
 app.listen(PORT, () => {
-   console.log(http.STATUS_CODES);
+   // console.log(http.STATUS_CODES);
   console.log("Server Running on http://localhost:" + PORT);
 });
