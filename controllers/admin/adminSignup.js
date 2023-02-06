@@ -2,24 +2,33 @@ import adminModel from "../../models/admin/adminModel.js";
 import { signUpValidation } from "../../validation/adminValidation.js";
 
 const adminSignup = (req, res) => {
-  //Validate the inputs
+  try {
+    //Validate the inputs
+    const { userName, userEmail, passWord } = req.body;
+    const validSignUp = signUpValidation(req.body);
 
-  const validSignUp = signUpValidation(req.body);
+    if (JSON.stringify(validSignUp.value) === JSON.stringify({})) {
+      res.status(400).json({ err: "Body empty" });
+    } else if (validSignUp.error) {
+      res.status(400).json({ err: validSignUp.error.details[0].message });
+    } else {
+      //Verfiy if the admin already exists
 
-  if (JSON.stringify(validSignUp.value) === JSON.stringify({})) {
-    res.status(400).json({ err: "Body empty" });
-  } else if (validSignUp.error) {
-    res.status(400).json({ err: validSignUp.error.details[0].message });
-  } else {
-    //Verfiy if the admin already exists
+      adminModel.findOne({ userEmail: userEmail }).then((data) => {
+        if (data) {
+          res.status(300).json({ err: "Admin exists" });
+        } else {
+          res.status(200).json({ err: "Admin doest not exist" });
+        }
+      });
+    }
 
-    
-    res.status(209).json({ message: "No error in signUp" });
+    //Hash the password
+
+    //Send data to the DB
+  } catch (error) {
+    res.status(500).json({ error: "Error on signup from server : " + error });
   }
-
-  //Hash the password
-
-  //Send data to the DB
 };
 
 export default adminSignup;
