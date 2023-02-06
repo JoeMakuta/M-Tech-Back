@@ -6,7 +6,6 @@ import adminRoute from "./routes/admin/admin.js";
 
 dotenv.config();
 const { PORT } = process.env;
-const app = express();
 
 //DB Connexion
 mongoose.set("strictQuery", true);
@@ -20,7 +19,8 @@ mongoose
   });
 
 //The App server
-
+const app = express();
+app.use(express.json());
 app.use("/admin", adminRoute);
 
 app.listen(PORT, () => {

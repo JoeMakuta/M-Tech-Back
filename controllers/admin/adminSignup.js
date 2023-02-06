@@ -1,15 +1,25 @@
 import adminModel from "../../models/admin/adminModel.js";
+import { signUpValidation } from "../../validation/adminValidation.js";
 
 const adminSignup = (req, res) => {
+  //Validate the inputs
 
-   //Validate the inputs
-   
-   //Verfiy if the admin already exists
+  const validSignUp = signUpValidation(req.body);
 
-   //Hash the password
+  if (JSON.stringify(validSignUp.value) === JSON.stringify({})) {
+    res.status(400).json({ err: "Body empty" });
+  } else if (validSignUp.error) {
+    res.status(400).json({ err: validSignUp.error.details[0].message });
+  } else {
+    //Verfiy if the admin already exists
 
-   //Send data to the DB
-   
-}
+    
+    res.status(209).json({ message: "No error in signUp" });
+  }
 
-export default adminSignup
+  //Hash the password
+
+  //Send data to the DB
+};
+
+export default adminSignup;

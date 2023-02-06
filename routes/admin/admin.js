@@ -1,8 +1,12 @@
 import { Router } from "express";
+import adminSignup from "../../controllers/admin/adminSignup.js";
 const adminRoute = Router();
 
-adminRoute.use("/", (req, res) => {
-  res.send({ message: "The admin route" });
-});
+// adminRoute.use("/", (req, res, next) => {
+//   res.send({ message: "The admin route" });
+//   next();
+// });
 
-export default adminRoute
+adminRoute.post("/signup", adminSignup);
+
+export default adminRoute;
