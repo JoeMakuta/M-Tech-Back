@@ -3,6 +3,8 @@ import { signUpValidation } from "../../validation/adminValidation.js";
 import bcrypt from "bcrypt";
 
 const adminSignup = async (req, res) => {
+  const { SALT_ROUNDS } = process.env;
+
   try {
     //Validate the inputs
     const { userName, userEmail, passWord } = req.body;
@@ -24,7 +26,7 @@ const adminSignup = async (req, res) => {
             //Hash the password
 
             bcrypt
-              .genSalt(10)
+              .genSalt(Number(SALT_ROUNDS))
               .then((salt) => {
                 bcrypt
                   .hash(passWord, salt)
@@ -49,7 +51,7 @@ const adminSignup = async (req, res) => {
                   });
               })
               .catch((err) => {
-                res.status(500).json({ err: "Error generating salt" });
+                res.status(500).json({ err: "Error generating salt = " + err });
               });
           }
         });

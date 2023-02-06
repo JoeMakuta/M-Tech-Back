@@ -6,12 +6,12 @@ import http from "http";
 import adminRoute from "./routes/admin/admin.js";
 
 dotenv.config();
-const { PORT } = process.env;
+const { PORT, DB_URI } = process.env;
 
 //DB Connexion
 mongoose.set("strictQuery", true);
 await mongoose
-  .connect("mongodb://localhost:27017/M-tech-db")
+  .connect(DB_URI)
   .then(() => {
     console.log("DB Connected successfully");
   })
