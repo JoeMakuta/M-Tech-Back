@@ -1,7 +1,9 @@
 import adminModel from "../../models/admin/adminModel.js";
 import { signUpValidation } from "../../validation/adminValidation.js";
+import bcrypt from "bcrypt";
+const SALT_ROUNDS = process.env.SALT_ROUNDS;
 
-const adminSignup = (req, res) => {
+const adminSignup = async (req, res) => {
   try {
     //Validate the inputs
     const { userName, userEmail, passWord } = req.body;
@@ -20,13 +22,28 @@ const adminSignup = (req, res) => {
         } else {
           //Hash the password
 
-          
-          res.status(200).json({ err: "Admin doest not exist" });
+          bcrypt
+            .genSalt(10)
+            .then((salt) => {
+              bcrypt
+                .hash(passWord, salt)
+                .then((cryptedPassWord) => {
+                   //Send data to the DB
+
+                   res.status(200).json({cryptedPassWord : cryptedPassWord })
+                })
+                .catch((error) => {
+                  res.status(500).json({ err: "Error Crypting the password : " + error });
+                });
+            })
+            .catch((err) => {
+              res.status(500).json({ err: "Error generating salt" });
+            });
         }
       });
     }
 
-    //Send data to the DB
+   
   } catch (error) {
     res.status(500).json({ error: "Error on signup from server : " + error });
   }
