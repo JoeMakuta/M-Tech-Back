@@ -18,12 +18,13 @@ const adminSignup = (req, res) => {
         if (data) {
           res.status(300).json({ err: "Admin exists" });
         } else {
+          //Hash the password
+
+          
           res.status(200).json({ err: "Admin doest not exist" });
         }
       });
     }
-
-    //Hash the password
 
     //Send data to the DB
   } catch (error) {
