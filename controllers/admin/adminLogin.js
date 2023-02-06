@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const adminLogin = async (req, res) => {
+  const { TOKEN_SECRET, TOKEN_EXPIRES_IN } = process.env;
   try {
     //Validate the inputs
     const { userUniqueIdentifier, passWord } = req.body;
@@ -34,9 +35,9 @@ const adminLogin = async (req, res) => {
                     userId: user._id,
                     userEmail: user.userEmail,
                   },
-                  "JSON_WEB_TOKEN",
+                  TOKEN_SECRET,
                   {
-                    expiresIn: "24h",
+                    expiresIn: TOKEN_EXPIRES_IN,
                   }
                 );
                 if (token) {
