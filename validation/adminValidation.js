@@ -11,6 +11,7 @@ const signUpValidation = (data) => {
         )
       ),
     passWord: Joi.string().min(6).max(255).required(),
+    role: Joi.number().min(1).max(2).required(),
   }).validate(data);
 };
 

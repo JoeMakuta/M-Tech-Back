@@ -28,12 +28,23 @@ const adminSignup = async (req, res) => {
               bcrypt
                 .hash(passWord, salt)
                 .then((cryptedPassWord) => {
-                   //Send data to the DB
-
-                   res.status(200).json({cryptedPassWord : cryptedPassWord })
+                  //Send data to the DB
+                  new adminModel({
+                    ...req.body,
+                    passWord: cryptedPassWord,
+                  })
+                    .save()
+                    .then((data) => {
+                      res.status(200).json({ message: "Admin Saved" });
+                    })
+                    .catch((error) => {
+                      res.status(500).json({
+                        err: "Error saving the admin : " + error,
+                      });
+                    });
                 })
                 .catch((error) => {
-                  res.status(500).json({ err: "Error Crypting the password : " + error });
+                  res.status(500).json({ err: "Error : " + error });
                 });
             })
             .catch((err) => {
@@ -42,8 +53,6 @@ const adminSignup = async (req, res) => {
         }
       });
     }
-
-   
   } catch (error) {
     res.status(500).json({ error: "Error on signup from server : " + error });
   }
