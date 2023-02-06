@@ -10,7 +10,7 @@ const adminSignup = async (req, res) => {
     const validSignUp = signUpValidation(req.body);
 
     if (JSON.stringify(validSignUp.value) === JSON.stringify({})) {
-      res.status(400).json({ err: "Body empty" });
+      res.status(204).json({ err: "Body empty" });
     } else if (validSignUp.error) {
       res.status(400).json({ err: validSignUp.error.details[0].message });
     } else {
@@ -18,7 +18,7 @@ const adminSignup = async (req, res) => {
 
       adminModel.findOne({ userEmail: userEmail }).then((data) => {
         if (data) {
-          res.status(300).json({ err: "Admin exists" });
+          res.status(403).json({ err: "Admin exists" });
         } else {
           //Hash the password
 
@@ -35,7 +35,7 @@ const adminSignup = async (req, res) => {
                   })
                     .save()
                     .then((data) => {
-                      res.status(200).json({ message: "Admin Saved" });
+                      res.status(201).json({ message: "Admin Saved" });
                     })
                     .catch((error) => {
                       res.status(500).json({
