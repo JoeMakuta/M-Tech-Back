@@ -10,9 +10,27 @@ const adminLogin = async (req, res) => {
     if (validLogin.error) {
       res.status(401).json({ err: validLogin.error?.details[0].message });
     } else {
-      res.status(200).json({ message: "No error on inputs login " });
+      //check if the admin exists
+
+      adminModel
+        .findOne({
+          $or: [
+            { userName: userUniqueIdentifier },
+            { userEmail: userUniqueIdentifier },
+          ],
+        })
+        .then((data) => {
+          if (data) {
+            
+            res.status(200).json({ message: "Valid email " });
+          } else throw error;
+        })
+        .catch((error) => {
+          res.status(401).json({
+            err: "User email or password incorrect + ",
+          });
+        });
     }
-    //check if the admin exists
 
     //check the password
 
