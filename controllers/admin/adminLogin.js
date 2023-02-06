@@ -1,15 +1,27 @@
-import adminModel from "../../models/admin/adminModel.js"
+import adminModel from "../../models/admin/adminModel.js";
+import { loginValidation } from "../../validation/adminValidation.js";
 
-const adminLogin = (req, res) => {
-   //Validate the inputs
+const adminLogin = async (req, res) => {
+  try {
+    //Validate the inputs
+    const { userUniqueIdentifier, passWord } = req.body;
+    const validLogin = loginValidation(req.body);
 
-   //check if the admin exists
+    if (validLogin.error) {
+      res.status(401).json({ err: validLogin.error?.details[0].message });
+    } else {
+      res.status(200).json({ message: "No error on inputs login " });
+    }
+    //check if the admin exists
 
-   //check the password
+    //check the password
 
-   //generate token
+    //generate token
 
-   //Send token
-}
+    //Send token
+  } catch (error) {
+    res.status(500).json({ err: "Server login error : " + error });
+  }
+};
 
-export default adminLogin
+export default adminLogin;
