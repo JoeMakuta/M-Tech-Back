@@ -1,7 +1,6 @@
 import adminModel from "../../models/admin/adminModel.js";
 import { signUpValidation } from "../../validation/adminValidation.js";
 import bcrypt from "bcrypt";
-const SALT_ROUNDS = process.env.SALT_ROUNDS;
 
 const adminSignup = async (req, res) => {
   try {

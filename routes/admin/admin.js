@@ -1,4 +1,5 @@
 import { Router } from "express";
+import adminLogin from "../../controllers/admin/adminLogin.js";
 import adminSignup from "../../controllers/admin/adminSignup.js";
 const adminRoute = Router();
 
@@ -8,5 +9,6 @@ const adminRoute = Router();
 // });
 
 adminRoute.post("/signup", adminSignup);
+adminRoute.post("/login", adminLogin);
 
 export default adminRoute;
