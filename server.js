@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import http from "http";
 
 import adminRoute from "./routes/admin/admin.js";
+import notFound from "./controllers/middlewares/notFound.js";
 
 dotenv.config();
 const { PORT, DB_URI } = process.env;
@@ -24,7 +25,9 @@ const app = express();
 app.use(express.json());
 app.use("/admin", adminRoute);
 
+app.use(notFound);
+
 app.listen(PORT, () => {
-   // console.log(http.STATUS_CODES);
+  // console.log(http.STATUS_CODES);
   console.log("Server Running on http://localhost:" + PORT);
 });
