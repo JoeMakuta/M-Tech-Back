@@ -42,4 +42,18 @@ export const getProductById = (req, res, next) => {
   } catch (error) {}
 };
 
-export const getInLocationProducts = (req, res, next) => {};
+export const getAvailableProducts = (req, res, next) => {
+  try {
+    ProductModel.find({ inLocation: false })
+      .then((data) => {
+        if (!data) {
+          res.status(401).json({ message: "No product available!", data });
+        } else {
+          res.status(200).json({ message: "Available Products !", data });
+        }
+      })
+      .catch((err) => {
+        res.status(200).json({ message: "No product Products !", err });
+      });
+  } catch (error) {}
+};
