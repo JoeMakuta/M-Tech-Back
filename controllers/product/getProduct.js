@@ -44,12 +44,18 @@ export const getProductById = (req, res, next) => {
 
 export const getAvailableProducts = (req, res, next) => {
   try {
-    ProductModel.find({ inLocation: false })
+    ProductModel.find({ inLocation: req.query.available })
       .then((data) => {
         if (!data) {
           res.status(401).json({ message: "No product available!", data });
         } else {
-          res.status(200).json({ message: "Available Products !", data });
+          res.status(200).json({
+            message:
+              req.query.available == true
+                ? "Products Available !"
+                : "Products not available !",
+            data,
+          });
         }
       })
       .catch((err) => {
