@@ -1,5 +1,6 @@
 import { Router } from "express";
 import addProduct from "../../controllers/product/addProduct.js";
+import deleteProduct from "../../controllers/product/deleteProduct.js";
 import {
   getAllProducts,
   getAvailableProducts,
@@ -14,6 +15,6 @@ productRoute.post("/add", addProduct);
 
 productRoute.get("/:id", getProductById);
 productRoute.put("/update/:id", updateProduct);
-// productRoute.delete("/delete", )
+productRoute.delete("/delete/:id", deleteProduct);
 
 export default productRoute;
