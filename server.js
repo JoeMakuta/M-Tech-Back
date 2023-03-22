@@ -6,6 +6,7 @@ import http from "http";
 import adminRoute from "./routes/admin/admin.js";
 import notFound from "./controllers/middlewares/notFound.js";
 import productRoute from "./routes/product/productRoute.js";
+import verifyToken from "./controllers/middlewares/verifyToken.js";
 
 dotenv.config();
 const { PORT, DB_URI } = process.env;
@@ -40,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/admin", adminRoute);
-app.use("/product", productRoute)
+app.use("/product", verifyToken, productRoute);
 
 app.use(notFound);
 
