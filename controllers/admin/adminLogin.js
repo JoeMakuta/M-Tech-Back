@@ -42,23 +42,23 @@ const adminLogin = async (req, res) => {
                 );
                 if (token) {
                   //Send token
-                  res
-                    .status(201)
-                    .json({ message: "Successfully logged in", token });
+                  res.status(201).json({
+                    message: "Successfully logged in as " + user.userName,
+                    token,
+                  });
                 } else
-                  res
-                    .status(401)
-                    .json({ error: "Error generating token = ", error });
+                  res.status(401).json({ message: "Error generating token!" });
               } else
                 res
                   .status(401)
-                  .json({ error: "User email or password incorrect" });
+                  .json({ message: "User email or password incorrect!" });
             });
           } else throw error;
         })
         .catch((error) => {
           res.status(401).json({
-            err: "User email or password incorrect",
+            message: "User email or password incorrect!",
+            error,
           });
         });
     }

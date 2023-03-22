@@ -1,9 +1,9 @@
 import adminModel from "../../models/admin/adminModel.js";
 
-
 const deleteUser = (req, res, next) => {
   try {
-   adminModel.findByIdAndDelete(req.params.id)
+    adminModel
+      .findByIdAndDelete(req.params.id)
       .then((data) => {
         if (!data) {
           res.status(200).json({
@@ -19,7 +19,7 @@ const deleteUser = (req, res, next) => {
       })
       .catch((err) => {
         res.status(500).json({
-          message: "Error trying to delete !",
+          message: err.message,
           err,
         });
       });
