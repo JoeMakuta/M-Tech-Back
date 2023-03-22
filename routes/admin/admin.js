@@ -1,6 +1,7 @@
 import { Router } from "express";
 import adminLogin from "../../controllers/admin/adminLogin.js";
 import adminSignup from "../../controllers/admin/adminSignup.js";
+import deleteUser from "../../controllers/admin/deleteUser.js";
 import GetUsers from "../../controllers/admin/getUsers.js";
 const adminRoute = Router();
 
@@ -11,6 +12,9 @@ const adminRoute = Router();
 
 adminRoute.post("/signup", adminSignup);
 adminRoute.post("/login", adminLogin);
+
 adminRoute.get("/", GetUsers);
+
+adminRoute.delete("/delete/:id", deleteUser);
 
 export default adminRoute;
