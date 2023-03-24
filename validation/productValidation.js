@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 const validateProduct = (data) => {
+
   return Joi.object({
     productName: Joi.string().trim().min(3).max(255).required(),
     productPhoto: Joi.string().trim().min(3).required(),
@@ -9,6 +10,7 @@ const validateProduct = (data) => {
     inLocation: Joi.boolean().required(),
     totalProductIncome: Joi.number().min(0)
   }).validate(data);
+  
 };
 
 export default validateProduct;
