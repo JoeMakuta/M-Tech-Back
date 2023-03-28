@@ -25,7 +25,37 @@ export const getCategory = (req, res, next) => {
   } catch (error) {}
 };
 
-export const updateCategory = (req, res, next) => {};
+export const updateCategory = async (req, res, next) => {
+  //Validate Inputs
+  try {
+    const validCategory = await getCategoryValidation(req.body);
+
+    if (!validCategory.error) {
+      CategoryModel.findByIdAndUpdate({ _id: req.params.id }, req.body)
+        .then((data) => {
+          if (data) {
+            res.status(200).json({
+              message: "Category updated !",
+              "New Category": data,
+            });
+          } else {
+            res.status(401).json({
+              message: "No category found!",
+              "New Category": data,
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).json({
+            message: "No category with id :" + req.params.id + " was found!",
+            err: err.message,
+          });
+        });
+    } else {
+      res.status(401).json({ message: validProduct.error?.details[0].message });
+    }
+  } catch (error) {}
+};
 
 export const deleteCategory = (req, res, next) => {
   try {

@@ -3,6 +3,7 @@ import ProductModel from "../../models/product/productModel.js";
 export const getAllProducts = (req, res, next) => {
   try {
     ProductModel.find()
+      .populate("productCategory")
       .then((data) => {
         if (!data[0]) {
           res.status(404).json({
@@ -27,6 +28,7 @@ export const getAllProducts = (req, res, next) => {
 export const getProductById = (req, res, next) => {
   try {
     ProductModel.findById(req.params.id.trim())
+      .populate("productCategory")
       .then((data) => {
         res.status(200).json({
           message: "Product found",
@@ -45,6 +47,7 @@ export const getProductById = (req, res, next) => {
 export const getAvailableProducts = (req, res, next) => {
   try {
     ProductModel.find({ inLocation: req.query.available })
+      .populate("productCategory")
       .then((data) => {
         if (!data) {
           res.status(401).json({ message: "No product available!", data });
