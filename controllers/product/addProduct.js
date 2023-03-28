@@ -28,7 +28,7 @@ const addProduct = async (req, res, next) => {
         }
       })
       .catch((err) => {
-        res.status(err.status).json({ message: err.message, err: err.stack });
+        res.status(401).json({ message: err.message, err: err.stack });
       });
   } else {
     res.status(401).json({ err: validProduct.error?.details[0].message });
