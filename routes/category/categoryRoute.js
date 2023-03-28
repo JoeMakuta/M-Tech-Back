@@ -8,9 +8,10 @@ import {
 
 const CategoryRoute = Router();
 
-CategoryRoute.delete("/delete", deleteCategory);
 CategoryRoute.get("/get", getCategory);
 CategoryRoute.post("/add", addCategory);
-CategoryRoute.put("/update", updateCategory);
+
+CategoryRoute.delete("/delete/:id", deleteCategory);
+CategoryRoute.put("/update/:id", updateCategory);
 
 export default CategoryRoute

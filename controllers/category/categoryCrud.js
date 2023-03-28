@@ -1,11 +1,56 @@
 import CategoryModel from "../../models/category/categoryModel.js";
 import { getCategoryValidation } from "../../validation/categoryValidation.js";
 
-export const getCategory = (req, res, next) => {};
+export const getCategory = (req, res, next) => {
+  try {
+    CategoryModel.find()
+      .then((data) => {
+        if (!data[0]) {
+          res.status(404).json({
+            message: "No category available!",
+            data,
+          });
+        } else {
+          res.status(200).json({
+            message: "All the categories",
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: err.message,
+        });
+      });
+  } catch (error) {}
+};
 
-export const updateCategory = () => {};
+export const updateCategory = (req, res, next) => {};
 
-export const deleteCategory = () => {};
+export const deleteCategory = (req, res, next) => {
+  try {
+    CategoryModel.findByIdAndDelete(req.params.id)
+      .then((data) => {
+        if (!data) {
+          res.status(404).json({
+            message: "No category with id " + req.params.id + " found !",
+            data,
+          });
+        } else {
+          res.status(200).json({
+            message: "Category deleted !",
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: "Error trying to deleted !",
+          err,
+        });
+      });
+  } catch (error) {}
+};
 
 export const addCategory = async (req, res, next) => {
   try {
