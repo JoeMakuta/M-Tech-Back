@@ -7,6 +7,7 @@ import adminRoute from "./routes/admin/admin.js";
 import notFound from "./controllers/middlewares/notFound.js";
 import productRoute from "./routes/product/productRoute.js";
 import verifyToken from "./controllers/middlewares/verifyToken.js";
+import CategoryRoute from "./routes/category/categoryRoute.js";
 
 dotenv.config();
 const { PORT, DB_URI } = process.env;
@@ -42,10 +43,11 @@ app.use((req, res, next) => {
 
 app.use("/admin", adminRoute);
 app.use("/product", verifyToken, productRoute);
+app.use("/category", verifyToken, CategoryRoute);
 
 app.use(notFound);
 
 app.listen(PORT, () => {
-  // console.log(http.STATUS_CODES);
+  console.log(http.STATUS_CODES);
   console.log("Server Running on http://localhost:" + PORT);
 });
