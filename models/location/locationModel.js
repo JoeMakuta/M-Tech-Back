@@ -19,7 +19,10 @@ const locationSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "adminModel",
     },
-
+    validLocation: {
+      type: Boolean,
+      required: true,
+    },
   },
   { collection: "location-data", timestamps: true }
 );
