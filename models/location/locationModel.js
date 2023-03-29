@@ -5,23 +5,23 @@ const locationSchema = mongoose.Schema(
     productId: {
       required: true,
       type: mongoose.Schema.Types.ObjectId,
-      unique: true,
       ref: "productModel",
     },
-    locationDate: { type: Date, required: true },
+    locationDate: { type: Date, required: true, default: Date.now() },
     locationDeadline: { type: Date, required: true },
     renter: { type: String, required: true },
-    phoneRenter: { type: String, required: false },
-    locationTransport: { type: Number, required: false },
+    phoneNumberRenter: { type: String, required: false },
+    locationCharge: { type: Number, required: false },
     incomeMoney: { type: Number, required: true },
-    locationUser: {
+    locationAdmin: {
       required: true,
       type: mongoose.Schema.Types.ObjectId,
       ref: "adminModel",
     },
-    validLocation: {
+    locationInProgress: {
       type: Boolean,
       required: true,
+      default: true,
     },
   },
   { collection: "location-data", timestamps: true }
