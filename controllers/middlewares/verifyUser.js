@@ -1,8 +1,8 @@
 const verifyUser = (req, res, next) => {
   try {
-    const { currentUserId } = req.params;
+    const { id } = req.params;
     const payLoadUserId = req.user.userId;
-    if (currentUserId === payLoadUserId) {
+    if (id === payLoadUserId) {
       next();
     } else {
       res.status(401).json({ message: "You are not authorized !" });
