@@ -42,8 +42,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/admin", adminRoute);
-app.use("/product", productRoute);
-app.use("/category", CategoryRoute);
+app.use("/product", verifyToken, productRoute);
+app.use("/category", verifyToken, CategoryRoute);
 
 app.use(notFound);
 

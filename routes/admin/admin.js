@@ -4,6 +4,7 @@ import adminSignup from "../../controllers/admin/adminSignup.js";
 import deleteUser from "../../controllers/admin/deleteUser.js";
 import GetUsers from "../../controllers/admin/getUsers.js";
 import verifyToken from "../../controllers/middlewares/verifyToken.js";
+import verifyUser from "../../controllers/middlewares/verifyUser.js";
 const adminRoute = Router();
 
 // adminRoute.use("/", (req, res, next) => {
@@ -16,6 +17,11 @@ adminRoute.post("/login", adminLogin);
 
 adminRoute.get("/", verifyToken, GetUsers);
 
-adminRoute.delete("/delete/:id", verifyToken, deleteUser);
+adminRoute.delete(
+  "/delete/:id/:currentUserId",
+  verifyToken,
+  verifyUser,
+  deleteUser
+);
 
 export default adminRoute;
