@@ -33,6 +33,7 @@ const adminLogin = async (req, res) => {
                 const token = jwt.sign(
                   {
                     userId: user._id,
+                    userName: user.userName,
                     userEmail: user.userEmail,
                   },
                   TOKEN_SECRET,
@@ -50,8 +51,8 @@ const adminLogin = async (req, res) => {
                       userEmail: user.userEmail,
                       userName: user.userName,
                       role: user.role,
+                      token,
                     },
-                    token,
                   });
                 } else
                   res
