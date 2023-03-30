@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 app.use("/admin", adminRoute);
 app.use("/product", verifyToken, productRoute);
 app.use("/category", verifyToken, CategoryRoute);
-app.use("/location", locationRoute);
+app.use("/location", verifyToken, locationRoute);
 
 app.use(notFound);
 
