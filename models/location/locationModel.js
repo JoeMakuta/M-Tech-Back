@@ -7,7 +7,7 @@ const locationSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "productModel",
     },
-    locationDate: { type: Date, required: true, default: Date.now() },
+    locationDate: { type: Date, default: Date.now() },
     locationDeadline: { type: Date, required: true },
     renter: { type: String, required: true },
     phoneNumberRenter: { type: String, required: false },

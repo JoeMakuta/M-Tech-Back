@@ -8,6 +8,7 @@ import notFound from "./controllers/middlewares/notFound.js";
 import productRoute from "./routes/product/productRoute.js";
 import verifyToken from "./controllers/middlewares/verifyToken.js";
 import CategoryRoute from "./routes/category/categoryRoute.js";
+import locationRoute from "./routes/location/locationRoute.js";
 
 dotenv.config();
 const { PORT, DB_URI } = process.env;
@@ -44,6 +45,7 @@ app.use((req, res, next) => {
 app.use("/admin", adminRoute);
 app.use("/product", verifyToken, productRoute);
 app.use("/category", verifyToken, CategoryRoute);
+app.use("/location", locationRoute);
 
 app.use(notFound);
 
