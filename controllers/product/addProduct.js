@@ -35,11 +35,9 @@ const addProduct = async (req, res, next) => {
             res.status(401).json({ message: err.message, err: err.stack });
           });
       } else {
-        res
-          .status(404)
-          .json({
-            message: `The category ${req.body.productCategory} does not exist! `,
-          });
+        res.status(404).json({
+          message: `The category ${req.body.productCategory} does not exist! `,
+        });
       }
     });
   } else {
