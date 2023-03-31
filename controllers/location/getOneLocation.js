@@ -2,7 +2,9 @@ import LocationModel from "../../models/location/locationModel.js";
 
 const getOneLocation = async (req, res, next) => {
   try {
-    const location = await LocationModel.findById(req.params.id);
+    const location = await LocationModel.findById(req.params.id)
+      .populate("productId")
+      .populate("locationAdmin", "_id, userName");
     if (location) {
       res.status(200).json({ message: "Success!", location });
     } else {
