@@ -39,10 +39,21 @@ const updateLocation = async (req, res, next) => {
               message: `No location with id : ${req.params.id} found!`,
             });
           } else {
-            res.status(201).json({
-              message: `Location Updted`,
-              location
-            });
+            //Update the product also
+            const newProduct = await ProductModel.findByIdAndUpdate(
+              req.body.productId,
+              {
+                inLocation: req.body.locationInProgress,
+              },
+              { new: true }
+            );
+            if (newProduct) {
+              res.status(201).json({
+                message: `Location Updted`,
+                location,
+                newProduct,
+              });
+            }
           }
         }
       }
