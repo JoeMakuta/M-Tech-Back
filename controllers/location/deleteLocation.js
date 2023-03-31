@@ -8,7 +8,6 @@ const deleteLocation = async (req, res, next) => {
     } else {
       res.status(404).json({ error: "Location Not found !", location });
     }
-    console.log("The location : ", location);
   } catch (error) {
     res.status(500).json({ message: error.message, error: error.stack });
   }
