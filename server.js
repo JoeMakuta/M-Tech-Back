@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import http from "http";
+import cors from "cors";
 
 import adminRoute from "./routes/admin/admin.js";
 import notFound from "./controllers/middlewares/notFound.js";
@@ -27,6 +28,7 @@ await mongoose
 //The App server
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
